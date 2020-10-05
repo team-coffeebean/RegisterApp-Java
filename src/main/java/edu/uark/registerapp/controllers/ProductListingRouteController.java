@@ -21,7 +21,7 @@ public class ProductListingRouteController {
 
 		try {
 			modelAndView.addObject(
-				ViewModelNames.PRODUCTS.getValue(),
+				ViewModelNames.PRODUCTS.getValue(), // products
 				this.productsQuery.execute());
 		} catch (final Exception e) {
 			modelAndView.addObject(

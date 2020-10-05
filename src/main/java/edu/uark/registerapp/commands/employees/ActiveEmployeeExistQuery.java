@@ -7,17 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.uark.registerapp.commands.ResultCommandInterface;
-import edu.uark.registerapp.commands.VoidCommandInterface;
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
 import edu.uark.registerapp.models.repositories.EmployeeRepository;
 
 @Service
-public class ActiveEmployeeExistQuery implements VoidCommandInterface {
+public class ActiveEmployeeExistQuery implements ResultCommandInterface<Boolean> {
 	@Override
-	public void execute() {
-        if (!this.employeeRepository.existsByIsActive(true)) {
+	public Boolean execute() {
+        if (this.employeeRepository.existsByIsActive(true)) {
+			return true;
+        } else {
             throw new NotFoundException("ActiveEmployee");
-        }
+		}
 	}
 
 

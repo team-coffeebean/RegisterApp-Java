@@ -30,7 +30,7 @@ public class EmployeeSignInCommand implements VoidCommandInterface {
         EmployeeEntity employee = this.authEmployee();
         String empId = this.employeeSignIn.getEmployeeId();
         Optional<ActiveUserEntity> activeUser = 
-                this.activeUserRepository.findByEmployeeId(UUID.fromString(empId));
+                this.activeUserRepository.findByEmployeeId(employee.getId());
         if (activeUser.isPresent()) {
             activeUser.get().setSessionKey(this.sessionKey);
             activeUserRepository.save(activeUser.get());
@@ -39,7 +39,7 @@ public class EmployeeSignInCommand implements VoidCommandInterface {
             ActiveUserEntity aue = new ActiveUserEntity();
             aue.setSessionKey(this.sessionKey);
             aue.setClassification(employee.getClassification());
-            aue.setEmployeeId(UUID.fromString(empId));
+            aue.setEmployeeId(employee.getId());
             aue.setName(employee.getFirstName() + " " + employee.getLastName());
             System.out.println("here4");
             activeUserRepository.save(aue);
