@@ -178,6 +178,7 @@ function getErrorMessageDisplayElement() {
 }
 // End getters and setters
 
+
 //Sign out
 function signOutActionClickHandler() {
 	ajaxDelete("/api/signOut", (callbackResponse) => {

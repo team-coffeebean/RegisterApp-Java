@@ -1,3 +1,4 @@
+// Edited by Toma on Oct 6
 package edu.uark.registerapp.controllers;
 
 import java.util.Map;
@@ -35,10 +36,20 @@ public class MainMenuRouteController extends BaseRouteController {
 				new ModelAndView(ViewNames.MAIN_MENU.getViewName()),
 				queryParameters);
 
-		// TODO: Examine the ActiveUser classification if you want this information
+				
+		// Examining the ActiveUser classificationz
+		String isElevatedUser;
+		if(activeUserEntity.get().getClassification() == 501 || activeUserEntity.get().getClassification() == 701) {
+			isElevatedUser = "true";
+		} else {
+			isElevatedUser = "false";
+		}
+		
+
 		modelAndView.addObject(
 			ViewModelNames.IS_ELEVATED_USER.getValue(),
-			true);
+			isElevatedUser);
+	
 		
 		return modelAndView;
 	}

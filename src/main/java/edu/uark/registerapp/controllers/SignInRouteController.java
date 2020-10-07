@@ -15,8 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.EmployeeSignIn;
+<<<<<<< HEAD
 import edu.uark.registerapp.commands.employees.ActiveEmployeeExistQuery;
 import edu.uark.registerapp.commands.employees.EmployeeSignInCommand;
+=======
+import edu.uark.registerapp.commands.employees.helpers.ActiveEmployeeExistsQuery;
+import edu.uark.registerapp.commands.employees.helpers.EmployeeSignInCommand;
+>>>>>>> 9d82371e80753570fb0a6f42c2d847be0080728b
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
 import edu.uark.registerapp.commands.exceptions.UnprocessableEntityException;
 
@@ -67,7 +72,14 @@ public class SignInRouteController extends BaseRouteController {
 
 	// Properties
 	@Autowired
+<<<<<<< HEAD
 	private ActiveEmployeeExistQuery activeEmployeeExistQuery;
 	@Autowired
 	private EmployeeSignInCommand employeeSignInCommand;
 }
+=======
+	private ActiveEmployeeExistsQuery activeEmployeeExistQuery;
+	@Autowired
+	private EmployeeSignInCommand employeeSignInCommand;
+}
+>>>>>>> 9d82371e80753570fb0a6f42c2d847be0080728b
