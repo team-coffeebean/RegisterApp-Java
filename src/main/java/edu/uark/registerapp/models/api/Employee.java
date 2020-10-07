@@ -95,8 +95,10 @@ public class Employee extends ApiResponse {
 		return this;
 	}
 	public Employee setCreatedOn(final LocalDateTime createdOn) {
-		this.createdOn =
-			createdOn.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		if (createdOn != null) {
+			this.createdOn =
+				createdOn.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		}
 
 		return this;
 	}
@@ -139,7 +141,6 @@ public class Employee extends ApiResponse {
 		this.classification = employeeEntity.getClassification();
 		this.employeeId =
 			EmployeeHelper.padEmployeeId(employeeEntity.getEmployeeId());
-
 		this.setCreatedOn(employeeEntity.getCreatedOn());
 	}
 }

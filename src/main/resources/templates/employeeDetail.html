@@ -17,77 +17,75 @@
 	</div>
 		
 	<div id="main" class="main">
+		<h4 id="errorValidation" style="color: red;"></h4>
 		<div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
 			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
 		</div>
 
 		<div class="inputContent">
-			<!-- temp url-->
-			<form action="/" method="POST" onsubmit=";" class="inputContent">
-				<table id="employeeDetails">
-					<tbody>
-						<tr class="hidden">
-							<td>ID:</td>
-							<td>
-								<input id="employeeId" type="hidden" th:value="${!employee.isEmpty} ? ${employee.id} : ''" />
-							</td>
-						</tr>
-						<tr class="hidden">
-							<td>Manager ID:</td>
-							<td>
-								<input id="employeeManagerId" type="hidden" th:value="${!employee.isEmpty} ? ${employee.managerId} : ''" />
-							</td>
-						</tr>
-						<tr th:class="${employee.isEmpty} ? hidden : ''">
-							<td class="label">Employee ID:</td>
-							<td>
-								<input id="employeeEmployeeId" type="text" th:value="${!employee.isEmpty} ? ${employee.employeeId} : ''" class="update" disabled />
-							</td>
-						</tr>
-						<!-- TODO: Other employee inputs -->
-						<tr>
-							<td class="label">First Name:</td>
-							<td>
-								<input id="firstName" type="text">
-							</td>
-						</tr>
-						<tr>
-							<td class="label">Last Name:</td>
-							<td>
-								<input id="lastName" type="text">
-							</td>
-						</tr>
-						<tr>
-							<td class="label">Password:</td>
-							<td>
-								<input id="password" type="text">
-							</td>
-						</tr>
-						<tr>
-							<td class="label">Verify Password:</td>
-							<td>
-								<input id="verifyPassword" type="text">
-							</td>
-						</tr>
-						<tr>
-							<td class="label">Employee Type:</td>
-							<td>
-								<select name="employeeType" id="employeeType">
-									<option value="cashier">Cashier</option>
-									<option value="shiftManager">Shift Manager</option>
-									<option value="generalManager">General Manager</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="submit" value="Save">
-							</td>
-						</tr>
-					</tbody>
-				</table>
+			<table id="employeeDetails">
+				<tbody>
+					<tr class="hidden">
+						<td>ID:</td>
+						<td>
+							<input id="employeeId" type="hidden" th:value="${!employee.isEmpty} ? ${employee.id} : ''" />
+						</td>
+					</tr>
+					<tr class="hidden">
+						<td>Manager ID:</td>
+						<td>
+							<input id="employeeManagerId" type="hidden" th:value="${!employee.isEmpty} ? ${employee.managerId} : ''" />
+						</td>
+					</tr>
+					<tr id="toggleHidden" th:class="${employee.isEmpty} ? hidden : ''">
+						<td class="label">Employee ID:</td>
+						<td>
+							<input id="employeeEmployeeId" type="text" th:value="${!employee.isEmpty} ? ${employee.employeeId} : ''" class="update" disabled />
+						</td>
+					</tr>
+					<!-- TODO: Other employee inputs -->
+					<tr>
+						<td class="label">First Name:</td>
+						<td>
+							<input id="firstName" type="text" th:value="${!employee.isEmpty} ? ${employee.firstName} : ''">
+						</td>
+					</tr>
+					<tr>
+						<td class="label">Last Name:</td>
+						<td>
+							<input id="lastName" type="text" th:value="${!employee.isEmpty} ? ${employee.lastName} : ''">
+						</td>
+					</tr>
+					<tr>
+						<td class="label">Password:</td>
+						<td>
+							<input id="password" type="text" th:value="${!employee.isEmpty} ? ${employee.password} : ''">
+						</td>
+					</tr>
+					<tr>
+						<td class="label">Verify Password:</td>
+						<td>
+							<input id="verifyPassword" type="text">
+						</td>
+					</tr>
+					<tr>
+						<td class="label">Employee Type:</td>
+						<td>
+							<select name="employeeType" id="employeeType">
+								<option value=101>Cashier</option>
+								<option value=501>Shift Manager</option>
+								<option value=701>General Manager</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button type="button" id="saveBtn">Save</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 
-			</form>
 		</div>
 
 		<!-- TODO: An action element to initiate a save -->
