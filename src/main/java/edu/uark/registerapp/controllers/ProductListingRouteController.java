@@ -19,11 +19,7 @@ import edu.uark.registerapp.models.entities.ActiveUserEntity;
 
 @Controller
 @RequestMapping(value = "/productListing")
-<<<<<<< HEAD
-public class ProductListingRouteController {
-=======
 public class ProductListingRouteController extends BaseRouteController { // extends added by Toma
->>>>>>> 9d82371e80753570fb0a6f42c2d847be0080728b
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView showProductListing(final HttpServletRequest request) {
 
