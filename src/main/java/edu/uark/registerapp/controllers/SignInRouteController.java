@@ -34,7 +34,7 @@ public class SignInRouteController extends BaseRouteController {
 				return new ModelAndView(ViewNames.SIGN_IN.getViewName());
 			}	
 		} catch (NotFoundException e) { // no employee exists
-			String redirectUrl = "redirect:/" + ViewNames.EMPLOYEE_DETAIL;
+			String redirectUrl = "redirect:/" + ViewNames.EMPLOYEE_DETAIL.getViewName();
 			return new ModelAndView(redirectUrl);
 		}
 		return (new ModelAndView(ViewNames.SIGN_IN.getViewName()))
