@@ -1,3 +1,4 @@
+<!-- Edited by Toma on Oct 6-->
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
@@ -22,7 +23,7 @@
 		</div>
 
 		<div class="productsWrapper">
-			<div>
+			<div th:class="${isElevatedUser} ? '' : hidden">
 				<a href="/productDetail/" class="button">Create New</a>
 			</div>
 
@@ -54,6 +55,12 @@
 			</script>
 		</div>
 	</div>
+
+	<!-- added by Toma -->
+	<div class="footer">
+		<img id="signOutImage" src="https://cdn.onlinewebfonts.com/svg/img_229389.png" alt="Sign Out" class="footer" />
+	</div>
+	<!------------------->
 		
 </body>
 

@@ -1,3 +1,4 @@
+//Edited by Toma on Oct 6
 package edu.uark.registerapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,22 +7,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+
 import edu.uark.registerapp.commands.products.ProductsQuery;
 import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Product;
+import edu.uark.registerapp.models.entities.ActiveUserEntity;
 
 @Controller
-@RequestMapping(value = "/")
-public class ProductListingRouteController {
+@RequestMapping(value = "/productListing")
+public class ProductListingRouteController extends BaseRouteController { // extends added by Toma
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView showProductListing() {
+	public ModelAndView showProductListing(final HttpServletRequest request) {
+
+		//--------added by Toma ------------//
+		final Optional<ActiveUserEntity> activeUserEntity =
+			this.getCurrentUser(request);
+		if (!activeUserEntity.isPresent()) {
+			return this.buildInvalidSessionResponse();
+		}
+		// ---------------------------------//
+
 		ModelAndView modelAndView =
 			new ModelAndView(ViewNames.PRODUCT_LISTING.getViewName());
 
 		try {
 			modelAndView.addObject(
-				ViewModelNames.PRODUCTS.getValue(),
+				ViewModelNames.PRODUCTS.getValue(), // products
 				this.productsQuery.execute());
 		} catch (final Exception e) {
 			modelAndView.addObject(
@@ -31,6 +46,20 @@ public class ProductListingRouteController {
 				ViewModelNames.PRODUCTS.getValue(),
 				(new Product[0]));
 		}
+
+		//-------added by Toma--------------------------------------//
+		// Examining the ActiveUser classificationz
+		String isElevatedUser;
+		if(activeUserEntity.get().getClassification() == 501 || activeUserEntity.get().getClassification() == 701) {
+			isElevatedUser = "true";
+		} else {
+			isElevatedUser = "false";
+		}
+
+		modelAndView.addObject(
+			ViewModelNames.IS_ELEVATED_USER.getValue(),
+			isElevatedUser);
+		//-----------------------------------------------------------//
 		
 		return modelAndView;
 	}

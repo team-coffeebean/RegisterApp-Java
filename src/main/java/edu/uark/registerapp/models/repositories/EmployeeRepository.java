@@ -7,6 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import edu.uark.registerapp.models.entities.EmployeeEntity;
 
+// You do not need to write implementation of the repository interface
+// This feature is what makes JPA so powerful.
 public interface EmployeeRepository extends CrudRepository<EmployeeEntity, UUID> {
 	boolean existsByIsActive(boolean isActive);
 	boolean existsByEmployeeId(int employeeId);
