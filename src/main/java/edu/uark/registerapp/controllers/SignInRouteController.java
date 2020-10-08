@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +17,6 @@ import edu.uark.registerapp.models.api.EmployeeSignIn;
 import edu.uark.registerapp.commands.employees.ActiveEmployeeExistQuery;
 import edu.uark.registerapp.commands.employees.EmployeeSignInCommand;
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
-import edu.uark.registerapp.commands.exceptions.UnprocessableEntityException;
 
 import java.util.Map;
 
@@ -31,6 +29,9 @@ public class SignInRouteController extends BaseRouteController {
 		try {
 			// if employees exist
 			if (this.activeEmployeeExistQuery.execute()) { 
+				if (allParams.containsKey("employeeId")) {
+					return new ModelAndView(ViewNames.SIGN_IN.getViewName()).addObject("employeeId", allParams.get("employeeId"));
+				}
 				return new ModelAndView(ViewNames.SIGN_IN.getViewName());
 			}	
 		} catch (NotFoundException e) { // no employee exists

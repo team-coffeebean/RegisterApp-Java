@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	getSaveActionElement().addEventListener("click", saveActionClick);
 	getDeleteActionElement().addEventListener("click", deleteActionClick);
 
+
 	if (!productLookupCodeElement.disabled) {
 		productLookupCodeElement.focus();
 		productLookupCodeElement.select();

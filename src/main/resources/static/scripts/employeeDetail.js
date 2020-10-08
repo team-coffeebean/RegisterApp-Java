@@ -10,17 +10,17 @@ function saveActionClick(event) {
 	// TODO: Actually save the employee via an AJAX call
 	errorMessage = validateEmpInfo()
 	if (errorMessage == "") {
-		employeeId = document.getElementById("employeeId").value;
 		classificationCode = document.getElementById("employeeType").value;
 		if (classificationCode == null) {
 			classificationCode = -1;
 		}
 		console.log("here 4");
+		employeeId = document.getElementById("employeeEmployeeId").value;
 
 		const employeeObject = {
 			isActive : true,
-			id : employeeId,
-			employeeId : document.getElementById("employeeEmployeeId").value,
+			id : document.getElementById("employeeId").value,
+			employeeId : employeeId,
 			classification : classificationCode,
 			// isInitialEmployee
 			// managerId = 
@@ -32,10 +32,22 @@ function saveActionClick(event) {
 			ajaxPost("/api/employee/", employeeObject, (callbackResponse) => {
 				if (isSuccessResponse(callbackResponse)) {
 					document.getElementById("toggleHidden").classList.remove("hidden");
+					console.log("here 0");
+					console.log(callbackResponse.data);
+					if (callbackResponse.data.isInitialEmployee) {
+						console.log("here 1");
+						//ajaxGet(callbackResponse.data.redirectUrl, null);
+						window.location.href = callbackResponse.data.redirectUrl;
+					} else {
+						document.getElementById("employeeEmployeeId").value = callbackResponse.data.employeeId;
+						console.log(callbackResponse.data.id);
+						document.getElementById("employeeId").value = callbackResponse.data.id;
+
+					}
 				}
 			});
 		} else {
-			ajaxPatch("/api/employee/" + employeeId, employeeObject, (callbackResponse) => {
+			ajaxPatch("/api/employee/" + employeeObject.id, employeeObject, (callbackResponse) => {
 				if (isSuccessResponse(callbackResponse)) {
 					document.getElementById("toggleHidden").classList.remove("hidden");
 					document.getElementById("employeeEmployeeId").value = callbackResponse.data.employeeId;
@@ -72,8 +84,11 @@ function validateEmpInfo() {
 		invalidElem += "Element Type /";
 		empType.focus();
 	}
+	if (invalidElem != "") {
+		invalidElem = "Following element(s) is(are) blank : " + invalidElem + " ";
+	}
 	if (password.value != confirm.value) {
-		invalideElem += "Password and Confirm Password don't match."
+		invalidElem += "Password and Confirm Password don't match."
 		confirm.focus();
 	}
 	return invalidElem;

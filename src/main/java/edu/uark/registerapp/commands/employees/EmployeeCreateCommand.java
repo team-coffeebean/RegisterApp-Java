@@ -1,6 +1,5 @@
 package edu.uark.registerapp.commands.employees;
 
-import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import edu.uark.registerapp.models.repositories.EmployeeRepository;
 
 @Service
 public class EmployeeCreateCommand implements ResultCommandInterface<Employee> {
-    @Transactional
 	@Override
 	public Employee execute() {
         this.validateEmployee();
@@ -25,9 +23,11 @@ public class EmployeeCreateCommand implements ResultCommandInterface<Employee> {
                     == EmployeeClassification.NOT_DEFINED.getClassification()) {
                 this.apiEmployee.setClassification(EmployeeClassification.GENERAL_MANAGER.getClassification());
             }
-        }
+		}
+		
 		EmployeeEntity employee = this.employeeRepository.save(
 			new EmployeeEntity(this.apiEmployee));
+		this.apiEmployee = new Employee(employee);
         return this.apiEmployee;
 	}
 

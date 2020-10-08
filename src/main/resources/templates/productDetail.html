@@ -34,7 +34,7 @@
 					<tr>
 						<td class="label">Lookup Code:</td>
 						<td>
-							<input id="productLookupCode" type="text" th:value="${!product.isEmpty} ? ${product.lookupCode} : ''" class="update" />
+							<input id="productLookupCode" type="text" th:value="${!product.isEmpty} ? ${product.lookupCode} : ''" class="update"/>
 						</td>
 					</tr>
 					<tr>
@@ -73,9 +73,15 @@
 
 	<!-- added by Toma -->
 	<div class="footer">
-		<img id="signOutImage" src="https://cdn.onlinewebfonts.com/svg/img_229389.png" alt="Sign Out" class="footer" />
+		<img id="signOutImage" src="/images/Sign-Out.png" alt="Sign Out" class="footer" />
 	</div>
 	<!------------------->
+	<script th:inline="javascript">
+		var isElevated = /*[[${isElevatedUser}]]*/ "true";
+		if (isElevated == "false") {
+			document.getElementById("productLookupCode").disabled = true;
+		}
+	</script>
 		
 </body>
 

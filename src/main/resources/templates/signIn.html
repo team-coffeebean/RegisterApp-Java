@@ -24,7 +24,7 @@
 		<form action="/" method="POST" onsubmit="return validateForm();" class="inputContent">
 			<!-- TODO: Form input elements -->
 			<label for="employeeId">Employee ID</label>
-			<input type="number" id="employeeId" name="employeeId"><br>
+			<input type="number" id="employeeId" name="employeeId" th:value="${employeeId}"><br>
 			<lable for="password">Password</lable>
 			<input type="password" id="password" name="password"><br>
 			<input type="submit" value="Sign In">

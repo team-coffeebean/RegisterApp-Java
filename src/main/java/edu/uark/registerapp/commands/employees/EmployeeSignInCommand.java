@@ -3,9 +3,6 @@ package edu.uark.registerapp.commands.employees;
 
 import java.util.Optional;
 import java.util.Arrays;
-import java.util.UUID;
-import java.util.NoSuchElementException;
-import java.lang.Boolean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +18,7 @@ import edu.uark.registerapp.commands.exceptions.UnprocessableEntityException;
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
 import edu.uark.registerapp.commands.exceptions.UnauthorizedException;
 import edu.uark.registerapp.commands.VoidCommandInterface;
+import edu.uark.registerapp.commands.employees.helpers.EmployeeHelper;
 
 @Service
 public class EmployeeSignInCommand implements VoidCommandInterface {
@@ -28,20 +26,17 @@ public class EmployeeSignInCommand implements VoidCommandInterface {
 	@Override
 	public void execute() {
         EmployeeEntity employee = this.authEmployee();
-        String empId = this.employeeSignIn.getEmployeeId();
         Optional<ActiveUserEntity> activeUser = 
                 this.activeUserRepository.findByEmployeeId(employee.getId());
         if (activeUser.isPresent()) {
             activeUser.get().setSessionKey(this.sessionKey);
             activeUserRepository.save(activeUser.get());
         } else {
-            System.out.println("here3");
             ActiveUserEntity aue = new ActiveUserEntity();
             aue.setSessionKey(this.sessionKey);
             aue.setClassification(employee.getClassification());
             aue.setEmployeeId(employee.getId());
             aue.setName(employee.getFirstName() + " " + employee.getLastName());
-            System.out.println("here4");
             activeUserRepository.save(aue);
         }
         /*
@@ -72,7 +67,7 @@ public class EmployeeSignInCommand implements VoidCommandInterface {
             this.employeeRepository.findByEmployeeId(Integer.parseInt(empId));
         if (employee.isPresent()) { // if an employee with empId exists in DB
             if (!(Arrays.equals(employee.get().getPassword(),
-                    password.getBytes()))) {
+                    EmployeeHelper.hashPassword(password)))) {
                 throw new UnauthorizedException();
             }
         } else {

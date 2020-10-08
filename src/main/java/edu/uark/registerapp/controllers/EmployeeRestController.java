@@ -73,6 +73,7 @@ public class EmployeeRestController extends BaseRestController {
 		final HttpServletRequest request,
 		final HttpServletResponse response
 	) {
+		System.out.println("hello from updateEmployee");
 
 		final ApiResponse elevatedUserResponse =
 			this.redirectUserNotElevated(request, response);

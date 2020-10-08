@@ -20,11 +20,9 @@ import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Employee;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
-import edu.uark.registerapp.models.entities.EmployeeEntity;
 import edu.uark.registerapp.models.repositories.ActiveUserRepository;
 import edu.uark.registerapp.models.repositories.EmployeeRepository;
 import edu.uark.registerapp.models.enums.EmployeeClassification;
-import net.bytebuddy.dynamic.TypeResolutionStrategy.Active;
 
 @Controller
 @RequestMapping(value = "/employeeDetail")
@@ -46,10 +44,8 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 					ViewModelNames.EMPLOYEE.getValue(), (new Employee()));
 		} else if (!currentUser.isPresent()) {// if there is not an active user for the current session
 			// redirect to SignIn page with appropriate error messages
-			return new ModelAndView(
-							REDIRECT_PREPEND.concat(
-								ViewNames.SIGN_IN.getRoute())).addObject(
-									ViewModelNames.ERROR_MESSAGE.getValue(), "You aren't an active user, sign in first.");
+			return new ModelAndView(ViewNames.SIGN_IN.getViewName()).addObject(
+									ViewModelNames.ERROR_MESSAGE.getValue(), "You aren't an active user, sign in first.")	;
 		} else if (EmployeeClassification.isElevatedUser(currentUser.get().getClassification())) { // if current user is a manager
 			// serve up the EmployeeDetail view/doc
 			return new ModelAndView(
@@ -57,10 +53,9 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 					ViewModelNames.EMPLOYEE.getValue(), (new Employee()));
 		} else {
 			// reidirect to MainMenu with an appropriate error message
-			return new ModelAndView(
-							REDIRECT_PREPEND.concat(
-								ViewNames.MAIN_MENU.getRoute())).addObject(
-									ViewModelNames.ERROR_MESSAGE.getValue(), "You aren't privileged to see this page.");
+			return new ModelAndView(ViewNames.MAIN_MENU.getViewName()).addObject(
+									ViewModelNames.ERROR_MESSAGE.getValue(), "You aren't privileged to see this page.")	;
+
 		}
 
 		//return new ModelAndView(ViewModelNames.EMPLOYEE_TYPES.getValue());
@@ -72,12 +67,14 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		@RequestParam final Map<String, String> queryParameters,
 		final HttpServletRequest request
 	) {
-
+		System.out.println("hello from startWithEmployee");
 		final Optional<ActiveUserEntity> activeUserEntity =
 			this.getCurrentUser(request);
 
 		if (!activeUserEntity.isPresent()) {
-			return this.buildInvalidSessionResponse();
+			//return this.buildInvalidSessionResponse();
+			return new ModelAndView(ViewNames.SIGN_IN.getViewName()).addObject(
+									ViewModelNames.ERROR_MESSAGE.getValue(), "You aren't an active user, sign in first.")	;
 		} else if (!this.isElevatedUser(activeUserEntity.get())) {
 			return this.buildNoPermissionsResponse();
 		}
@@ -100,11 +97,6 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		// return new ModelAndView(ViewModelNames.EMPLOYEE_TYPES.getValue());
 	}
 
-	// Helper methods
-	private boolean activeUserExists() {
-		// TODO: Helper method to determine if any active users Exist
-		return true;
-	}
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	@Autowired

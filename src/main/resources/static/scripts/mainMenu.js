@@ -28,7 +28,7 @@ function viewProductsClick(event) {
 }
 
 function createEmpClick(event) {
-	location.assign("/productDetail/");
+	location.assign("/employeeDetail/");
 }
 
 function salesReportClick(event) {
