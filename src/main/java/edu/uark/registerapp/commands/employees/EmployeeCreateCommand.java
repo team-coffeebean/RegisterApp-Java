@@ -19,10 +19,7 @@ public class EmployeeCreateCommand implements ResultCommandInterface<Employee> {
         this.validateEmployee();
         
         if (this.isInitialEmployee) {
-            if (this.apiEmployee.getClassification() 
-                    == EmployeeClassification.NOT_DEFINED.getClassification()) {
-                this.apiEmployee.setClassification(EmployeeClassification.GENERAL_MANAGER.getClassification());
-            }
+			this.apiEmployee.setClassification(EmployeeClassification.GENERAL_MANAGER.getClassification());
 		}
 		
 		EmployeeEntity employee = this.employeeRepository.save(
