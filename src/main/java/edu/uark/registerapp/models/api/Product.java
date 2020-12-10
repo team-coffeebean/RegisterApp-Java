@@ -40,6 +40,17 @@ public class Product extends ApiResponse {
 		return this;
 	}
 
+	private int price;
+
+	public int getPrice() {
+		return this.price;
+	}
+
+	public Product setPrice(final int price) {
+		this.price = price;
+		return this;
+	}
+
 	private String createdOn;
 
 	public String getCreatedOn() {
@@ -62,6 +73,7 @@ public class Product extends ApiResponse {
 		super();
 
 		this.count = -1;
+		this.price = 0;
 		this.id = new UUID(0, 0);
 		this.lookupCode = StringUtils.EMPTY;
 
@@ -73,6 +85,7 @@ public class Product extends ApiResponse {
 
 		this.id = productEntity.getId();
 		this.count = productEntity.getCount();
+		this.price = productEntity.getPrice();
 		this.lookupCode = productEntity.getLookupCode();
 
 		this.setCreatedOn(productEntity.getCreatedOn());

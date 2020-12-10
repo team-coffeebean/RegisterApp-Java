@@ -52,6 +52,18 @@ public class ProductEntity {
 		return this;
 	}
 
+	@Column(name = "price")
+	private int price;
+
+	public int getPrice() {
+		return this.price;
+	}
+
+	public ProductEntity setPrice(final int price) {
+		this.price = price;
+		return this;
+	}
+
 	@Column(name = "createdon", insertable = false, updatable = false)
 	@Generated(GenerationTime.INSERT)
 	private LocalDateTime createdOn;
@@ -72,12 +84,14 @@ public class ProductEntity {
 
 	public ProductEntity() {
 		this.count = -1;
+		this.price = 0;
 		this.id = new UUID(0, 0);
 		this.lookupCode = StringUtils.EMPTY;
 	}
 
-	public ProductEntity(final String lookupCode, final int count) {
+	public ProductEntity(final String lookupCode, final int count, final int price) {
 		this.count = count;
+		this.price = price;
 		this.id = new UUID(0, 0);
 		this.lookupCode = lookupCode;
 	}
@@ -85,6 +99,7 @@ public class ProductEntity {
 	public ProductEntity(final Product apiProduct) {
     	this.id = new UUID(0, 0);
 		this.count = apiProduct.getCount();
+		this.price = apiProduct.getPrice();
 		this.lookupCode = apiProduct.getLookupCode();
 	}
 }
