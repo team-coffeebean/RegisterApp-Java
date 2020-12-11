@@ -18,6 +18,7 @@ import edu.uark.registerapp.commands.exceptions.UnprocessableEntityException;
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
 import edu.uark.registerapp.commands.exceptions.UnauthorizedException;
 import edu.uark.registerapp.commands.VoidCommandInterface;
+import edu.uark.registerapp.commands.activeUsers.ActiveUserDeleteCommand;
 import edu.uark.registerapp.commands.employees.helpers.EmployeeHelper;
 
 @Service
@@ -32,6 +33,9 @@ public class EmployeeSignInCommand implements VoidCommandInterface {
             activeUser.get().setSessionKey(this.sessionKey);
             activeUserRepository.save(activeUser.get());
         } else {
+            // first delete all activeUser (actually one or zero)
+            this.activeUserRepository.deleteAll();
+            // then add new activeUser
             ActiveUserEntity aue = new ActiveUserEntity();
             aue.setSessionKey(this.sessionKey);
             aue.setClassification(employee.getClassification());
@@ -92,5 +96,7 @@ public class EmployeeSignInCommand implements VoidCommandInterface {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	@Autowired
-	private ActiveUserRepository activeUserRepository;
+    private ActiveUserRepository activeUserRepository;
+    @Autowired
+    private ActiveUserDeleteCommand activeUserDeleteCommand;
 }

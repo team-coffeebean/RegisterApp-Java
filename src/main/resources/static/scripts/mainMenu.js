@@ -19,8 +19,7 @@ function isTrueString(s) {
 }
 
 function startTransactionClick(event) {
-    // has to be implemented later
-    displayError("Functionality has not been implemented.");
+    location.assign("/transaction/");
 }
 
 function viewProductsClick(event) {
